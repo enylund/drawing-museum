@@ -1,0 +1,12 @@
+{
+  "name": "poster_io",
+  "version": "0.0.0",
+  "description": "poster creation app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Eric Nylund",
+  "license": "BSD"
+}

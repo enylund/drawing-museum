@@ -1,0 +1,161 @@
+
+body {
+  margin: 0px;
+}
+
+@font-face {
+  font-family: 'apercu-medium';
+  src: asset-url("apercu-medium-webfont.eot", font);
+  src: asset-url("apercu-medium-webfont.eot?#iefix", font) format('embedded-opentype'),
+       asset-url("apercu-medium-webfont.woff", font) format('woff'),
+       asset-url("apercu-medium-webfont.ttf", font) format('truetype'),
+       asset-url("apercu-medium-webfont.svg#apercumedium", font) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+nav {
+  z-index:1;
+  font-family: 'apercu-medium';
+  position: absolute;
+  top: 30px;
+  padding-left:20px;
+  width: 15%;
+}
+
+#nav_hide {
+  margin-left: 10px;
+}
+
+#connectCounter {
+  font-family:'apercu-medium';
+  position:absolute;
+  top: 39px;
+  right: 70px;
+  font-size: 13pt;
+  border-bottom: 2px solid black;
+}
+
+#temp-title {
+  font-family:'apercu-medium';
+  position:absolute;
+  top: 65px;
+  right: 70px;
+  font-size: 13pt;
+}
+
+.header {
+  font-size: 13pt;
+}
+
+#canvas-links a {
+  margin-left:9px;
+  padding: 3px
+}
+
+#tools a {
+  margin-left:9px;
+}
+
+.red {
+  color:#e30000;
+}
+
+nav a:link {color:black; text-decoration:none;}/* unvisited link */
+nav a:visited {color:black;}  /* visited link */
+nav a:hover {color:#e30000;
+
+background: #eacfcf;
+
+}  /* mouse over link */
+nav a:active {color:black;}  /* selected link */
+
+#logo_type {
+  font-family: 'apercu-medium';
+  color: black;
+  font-size: 20pt;
+  text-decoration:none;
+  text-align:center;
+  padding:9px;
+  border: 5px solid black;
+  margin-bottom: 20px;
+}
+
+#logo_type:hover, #logo_type:hover * {
+  color:#e30000 ;
+  border-color: #e30000;
+  background:#eacfcf;
+}
+
+#new-canvas-form {
+  margin-top:20px;
+}
+
+.button-span:hover {
+  cursor: hand;
+  cursor: pointer;
+   color:#e30000;
+  background:#eacfcf;
+}
+
+canvas {
+  z-index:100;
+  background-color: #f5f5f5;
+}
+
+svg {
+  background-color: #f5f5f5;
+}
+
+
+#picture-title {
+  position: fixed;
+  bottom:30px;
+  left:30px;
+
+  font-size: 10pt;
+
+  height:20px;
+  width: 75px;
+  background-color:transparent;
+  color:black;
+}
+
+input[type=text] {
+  border: 2px solid black;
+  padding: 3px;
+  background: transparent;
+  font-family: 'apercu-medium';
+  color:black;
+  font-size: 13px;
+  outline: none;
+}
+
+input[type=text]:focus {
+color:#e30000;
+border-color: #e30000;
+background: #eacfcf;
+}
+
+
+#submit-picture {
+
+  position:fixed;
+  right: 30px;
+  bottom: 18px;
+
+  font-family: 'apercu-medium';
+  font-size: 13px;
+
+  padding:5px 10px;
+  background-color:transparent;
+  border: 2px solid black;
+  color:black;
+  text-decoration:none;
+}
+
+#submit-picture:hover {
+color:#e30000;
+border-color: #e30000;
+background: #eacfcf;
+}
