@@ -20,38 +20,14 @@ body {
   margin: 0px;
 }
 
-@font-face {
-  font-family: 'apercu-medium';
-  src: asset-url("apercu-medium-webfont.eot", font);
-  src: asset-url("apercu-medium-webfont.eot?#iefix", font) format('embedded-opentype'),
-       asset-url("apercu-medium-webfont.woff", font) format('woff'),
-       asset-url("apercu-medium-webfont.ttf", font) format('truetype'),
-       asset-url("apercu-medium-webfont.svg#apercumedium", font) format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
-nav {
-  z-index:1;
-  font-family: 'apercu-medium';
-  position: absolute;
-  top: 30px;
-  padding-left:20px;
-  width: 15%;
-}
-
-#nav_hide {
-  margin-left: 10px;
-}
-
 #connectCounter {
   font-family:'arial';
   position:absolute;
-  bottom: 139px;
-  right: 40px;
+  bottom: 100px;
+  left: 30px;
   font-size: 13pt;
   border: 10px solid;
-  padding:10px 35px;
+  padding:10px 31px;
   background:white;
   color:#49a0b8;
 
@@ -62,8 +38,8 @@ nav {
 
   font-family:'arial';
   position:absolute;
-  bottom: 239px;
-  right: 40px;
+  bottom: 175px;
+  left: 30px;
   font-size: 13pt;
   border: 10px solid;
   padding:10px 35px;
@@ -71,8 +47,36 @@ nav {
   color:#49a0b8;
 
   border-color: #88C1D0 #D3E8EE #B2D7E1 #49a0b8;
+  cursor:pointer;
+  cursor:hand;
 
 
+}
+
+#submit-picture {
+
+  position:fixed;
+  left: 30px;
+  bottom: 18px;
+
+  font-family: 'arial';
+  font-size: 13pt;
+
+  padding:10px 44px;
+  background-color:#f5f5f5;
+  border: solid 10px;
+  color:#49a0b8;
+  text-decoration:none;
+
+  border-color: #88C1D0 #D3E8EE #B2D7E1 #49a0b8;
+
+  cursor: pointer; 
+  cursor: hand;
+}
+
+#submit-picture:hover, #theCollection:hover {
+  color:#49a0b8;;
+  background: #B2D7E1;
 }
 
 #canvas-links a {
@@ -103,16 +107,6 @@ nav a:active {color:black;}  /* selected link */
   background:#eacfcf;
 }
 
-#new-canvas-form {
-  margin-top:20px;
-}
-
-.button-span:hover {
-  cursor: hand;
-  cursor: pointer;
-   color:#e30000;
-  background:#eacfcf;
-}
 
 canvas {
   z-index:100;
@@ -142,33 +136,6 @@ canvas {
 
 svg {
   background-color: #f5f5f5;
-}
-
-#submit-picture {
-
-  position:fixed;
-  right: 30px;
-  bottom: 18px;
-
-  font-family: 'arial';
-  text-transform:uppercase;
-  font-size: 23px;
-
-  padding:10px 25px;
-  background-color:#f5f5f5;
-  border: solid 10px;
-  color:#49a0b8;
-  text-decoration:none;
-
-  border-color: #88C1D0 #D3E8EE #B2D7E1 #49a0b8;
-
-  cursor: pointer; 
-  cursor: hand;
-}
-
-#submit-picture:hover {
-  color:#49a0b8;;
-  background: #B2D7E1;
 }
 
 </style>
@@ -281,6 +248,7 @@ svg {
 	        case 1:
 	          var path = new paper.Path();
 	          path.strokeColor = 'black';
+            path.strokeWidth = 10;
 	          return path;
 	        case 2:
 	           var path = new paper.Path();
