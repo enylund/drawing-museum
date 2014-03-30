@@ -7,6 +7,15 @@
 <script src="/socket.io/socket.io.js"></script>
   <style>
 
+
+html { 
+ background: url(images/bg.jpg) no-repeat center center fixed; 
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
+}
+
 body {
   margin: 0px;
 }
@@ -36,24 +45,14 @@ nav {
 }
 
 #connectCounter {
-  font-family:'apercu-medium';
+  font-family:'arial';
   position:absolute;
   top: 39px;
   right: 70px;
   font-size: 13pt;
-  border-bottom: 2px solid black;
-}
+  border-bottom: 10px solid;
 
-#temp-title {
-  font-family:'apercu-medium';
-  position:absolute;
-  top: 65px;
-  right: 70px;
-  font-size: 13pt;
-}
-
-.header {
-  font-size: 13pt;
+  border-color: #88C1D0 #D3E8EE #B2D7E1 #49a0b8;
 }
 
 #canvas-links a {
@@ -77,17 +76,6 @@ background: #eacfcf;
 
 }  /* mouse over link */
 nav a:active {color:black;}  /* selected link */
-
-#logo_type {
-  font-family: 'apercu-medium';
-  color: black;
-  font-size: 20pt;
-  text-decoration:none;
-  text-align:center;
-  padding:9px;
-  border: 5px solid black;
-  margin-bottom: 20px;
-}
 
 #logo_type:hover, #logo_type:hover * {
   color:#e30000 ;
@@ -118,78 +106,23 @@ canvas {
   margin-left: -300px;
   margin-top: -400px;
 
-  border: solid black 5px;
-}
 
-#poster_shadow_1 {
-
-  z-index:90;
-  background-color: #f5f5f5;
-  width:600px;
-  height:800px;
-
-  position: absolute;
-  left: 52%;
-  top: 48%; 
-  margin-left: -300px;
-  margin-top: -400px;
-
-  border: solid black 5px;
-
- }
-
-#poster_shadow_2 {
-
-  z-index:80;
-  background-color: #f5f5f5;
-  width:600px;
-  height:800px;
-
-  position: absolute;
-  left: 53%;
-  top: 46%; 
-  margin-left: -300px;
-  margin-top: -400px;
-
-  border: solid black 5px;
-
- }
+  border: solid 18px;
+/*
+  border-color: #939393 #ececec #c6c6c6 #4d4d4d;
+*/
+  border-color: #88C1D0 #D3E8EE #B2D7E1 #49a0b8;
+/*
+  border-color: #69CB77 #AFE3B6 #90D89B #3bab4b;
+  
+  border-color: #FAAF78 #FEEFE4 #FCD3B5 #f8781c;
+*/
+  }
 
 
 svg {
   background-color: #f5f5f5;
 }
-
-
-#picture-title {
-  position: fixed;
-  bottom:30px;
-  left:30px;
-
-  font-size: 10pt;
-
-  height:20px;
-  width: 75px;
-  background-color:transparent;
-  color:black;
-}
-
-input[type=text] {
-  border: 2px solid black;
-  padding: 3px;
-  background: transparent;
-  font-family: 'apercu-medium';
-  color:black;
-  font-size: 13px;
-  outline: none;
-}
-
-input[type=text]:focus {
-color:#e30000;
-border-color: #e30000;
-background: #eacfcf;
-}
-
 
 #submit-picture {
 
@@ -197,32 +130,34 @@ background: #eacfcf;
   right: 30px;
   bottom: 18px;
 
-  font-family: 'apercu-medium';
-  font-size: 13px;
+  font-family: 'arial';
+  text-transform:uppercase;
+  font-size: 33px;
 
-  padding:5px 10px;
-  background-color:transparent;
-  border: 2px solid black;
-  color:black;
+  padding:10px 15px;
+  background-color:#f5f5f5;
+  border: solid 7px;
+  color:#49a0b8;
   text-decoration:none;
+
+  border-color: #88C1D0 #D3E8EE #B2D7E1 #49a0b8;
+
+  cursor: pointer; 
+  cursor: hand;
 }
 
 #submit-picture:hover {
-color:#e30000;
-border-color: #e30000;
-background: #eacfcf;
+  color:white;
+  border-color: white;
+  background: #49a0b8;
 }
 
-  </style>
+</style>
 
 </head>
 <body>
 
 	<script type="text/javascript">
-	
-	  
-	
-	
 	
 	  var channel_id = "myCanvas";
 	  //
@@ -232,10 +167,7 @@ background: #eacfcf;
 
 
 	  // Define all tools globally
-	  var gradientTool = new paper.Tool();
-	  var hueChanger = new paper.Tool();
 	  var tool = new paper.Tool();
-	  var dottedLine  = new paper.Tool();
 	  var blackWhite = new paper.Tool();
 
 	  //
@@ -245,10 +177,6 @@ background: #eacfcf;
 	  var userId = Math.round($.now()*Math.random());
 
 	  $(document).ready(function(){
-
-	 $("#logo_type").click(function () {
-	    $("#nav_hide").slideToggle("slow");
-	 });
 
 	function userCounter(data) {
 	     $('#connectCounter').text("Drawers: " + data);
@@ -261,6 +189,53 @@ background: #eacfcf;
 
 	    var canvas = document.getElementById(channel_id);
 	    paper.setup(canvas);
+
+      socket.on('artworkInfo', function(imageURL, title, artist, creationDate) {
+          console.log(imageURL);
+          console.log(title);
+          console.log(artist);
+          console.log(creationDate);
+
+          $('#artworkImage').html("<img id='theImage' src='"+imageURL+"'>").hide();
+          var raster = new paper.Raster('theImage');
+          raster.position = paper.view.center;
+          raster.layer = 1;
+          raster.scale(1.75);
+
+
+          var textArtist = new paper.PointText({
+            point: [30, 150],
+            content:    artist.toUpperCase(),
+            fillColor: 'black',
+            fontFamily: 'times',
+            fontWeight: 'bold',
+            fontSize: 65,
+            layer: 5
+           });
+           
+           var textTitle = new paper.PointText({
+            point: [30, 80],
+            content:    title,
+            fillColor: 'black',
+            fontFamily: 'Courier',
+            fontWeight: 'bold',
+            fontSize: 65
+           });
+
+
+           var textDate = new paper.PointText({
+            point: [30, 220],
+            content:    creationDate,
+            fillColor: 'black',
+            fontFamily: 'Courier',
+            fontWeight: 'bold',
+            fontSize: 65
+           });
+
+
+
+
+     });
 
 	    socket.on('import', function(data){
 	      paper.project.importJSON(data);
@@ -402,6 +377,9 @@ background: #eacfcf;
 
 	    }
 
+      //
+      // Standard tool
+
 	    tool.onMouseDrag = function (event) {
 	      var points = extractPoints(event);
 	      var data = { channel: channel_id,drawing: 1, points: points, userId: userId, tool:1};
@@ -419,163 +397,6 @@ background: #eacfcf;
 	      socket.emit("update", picture);
 	    }
 
-
-
-	    // Hue Changing Tool
-	    hueChanger.onMouseDown = function(event) {
-
-	          var uniquePath = Math.round($.now()*Math.random());
-	          var points = extractPoints(event);
-	          var drawing = 0;
-
-	          var data = {
-	              channel: channel_id,
-	              userId: userId,
-	              drawing: drawing,
-	              points: points,
-	              pathId: uniquePath,
-	              tool: 2
-	          };
-
-	      drawEvent(data);
-	      emitPoint("onMouseDown", data);
-
-	    }
-
-	    hueChanger.onMouseDrag = function(event) {
-	          var points = extractPoints(event);
-	          var data = { channel: channel_id, drawing: 1, points: points, userId: userId, tool:2};
-	          drawEvent(data);
-	          emitPoint("onMouseDrag", data);
-	    }
-
-	    hueChanger.onMouseUp = function(event) {
-	       var data = { channel: channel_id, drawing: 2, userId: userId, tool:2 };
-	      drawEvent(data);
-	      emitPoint("onMouseUp", data);
-	      //testing export
-	      var pictureJSON = paper.project.exportJSON();
-	      var picture = {channel: channel_id, JSON: pictureJSON}
-	      socket.emit("update", picture);
-	    }
-
-
-	   // Gradient Tool
-	    gradientTool.onMouseDown = function(event) {
-	      var uniquePath = Math.round($.now()*Math.random());
-	      var points = extractPoints(event);
-	      var drawing = 0;
-
-	      var data = {
-	          channel: channel_id,
-	          userId: userId,
-	          drawing: drawing,
-	          points: points,
-	          pathId: uniquePath,
-	          tool: 3
-	      };
-
-	      drawEvent(data);
-	      emitPoint("onMouseDown", data);
-
-	    }
-
-	    gradientTool.onMouseDrag = function(event) {
-	          var points = extractPoints(event);
-	          var data = { channel: channel_id, drawing: 1, points: points, userId: userId, tool:3};
-	          drawEvent(data);
-	          emitPoint("onMouseDrag", data);
-	    }
-
-	     gradientTool.onMouseUp = function(event) {
-	       var data = { channel: channel_id, drawing: 2, userId: userId, tool:3 };
-	      drawEvent(data);
-	      emitPoint("onMouseUp", data);
-	      //testing export
-	      var pictureJSON = paper.project.exportJSON();
-	      var picture = {channel: channel_id, JSON: pictureJSON}
-	      socket.emit("update", picture);
-	    }
-
-
-
-	    // Dotted Line Tool
-	     dottedLine.onMouseDown = function(event) {
-	      var uniquePath = Math.round($.now()*Math.random());
-	      var points = extractPoints(event);
-	      var drawing = 0;
-
-	      var data = {
-	          channel: channel_id,
-	          userId: userId,
-	          drawing: drawing,
-	          points: points,
-	          pathId: uniquePath,
-	          tool: 4
-	      };
-
-	      drawEvent(data);
-	      emitPoint("onMouseDown", data);
-
-	    }
-
-	    dottedLine.onMouseDrag = function(event) {
-	          var points = extractPoints(event);
-	          var data = { channel: channel_id, drawing: 1, points: points, userId: userId, tool:3};
-	          drawEvent(data);
-	          emitPoint("onMouseDrag", data);
-	    }
-
-	     dottedLine.onMouseUp = function(event) {
-	       var data = { channel: channel_id, drawing: 2, userId: userId, tool:3 };
-	      drawEvent(data);
-	      emitPoint("onMouseUp", data);
-	      //testing export
-	      var pictureJSON = paper.project.exportJSON();
-	      var picture = {channel: channel_id, JSON: pictureJSON}
-	      socket.emit("update", picture);
-	     }
-
-
-	    //                 Clone Tool                        //
-
-	      blackWhite.onMouseDown = function(event) {
-	      var uniquePath = Math.round($.now()*Math.random());
-	      var points = extractPoints(event);
-	      var drawing = 0;
-
-	      var data = {
-	          channel: channel_id,
-	          userId: userId,
-	          drawing: drawing,
-	          points: points,
-	          pathId: uniquePath,
-	          tool: 5
-	      };
-
-	      drawEvent(data);
-	      emitPoint("onMouseDown", data);
-
-	    }
-
-	    blackWhite.onMouseDrag = function(event) {
-	          var points = extractPoints(event);
-	          var data = { channel: channel_id, drawing: 1, points: points, userId: userId, tool:5};
-	          drawEvent(data);
-	          emitPoint("onMouseDrag", data);
-	    }
-
-	     blackWhite.onMouseUp = function(event) {
-	       var data = { channel: channel_id, drawing: 2, userId: userId, tool:5 };
-	      drawEvent(data);
-	      emitPoint("onMouseUp", data);
-	      //testing export
-	      var pictureJSON = paper.project.exportJSON();
-	      var picture = {channel: channel_id, JSON: pictureJSON}
-	      socket.emit("update", picture);
-	     }
-
-
 	    //
 	    // All emiter functions
 	    //
@@ -591,20 +412,6 @@ background: #eacfcf;
 	      drawEvent(data);
 	    });
 
-	    $('#canvas-links').hide();
-	    $('#canvas-toggle').click(function() {
-	      $('#canvas-links').slideToggle('slow');
-	    });
-
-	   $('#tools-links').hide();
-	   $('#tools-toggle').click(function() {
-	      $('#tools-links').slideToggle('slow');
-	   });
-
-	   $('#new-canvas-form').hide();
-	   $('#new-canvas').click(function() {
-	      $('#new-canvas-form').fadeToggle('slow');
-	   });
 
 	});
 
@@ -647,58 +454,14 @@ background: #eacfcf;
 
 	</script>
 
-	<nav>
-	        <div id="logo_type">
-	              Drawing IO
-	        </div>
-
-	        <div id="nav_hide">
-
-
-	          <div id="canvas-button" class="header"><span id='canvas-toggle' class="button-span">Canvases</span></div>
-	            <div id="canvas-links">
-	              
-	              <div>
-	                     
-	              </div>
-	            
-	            </div>
-
-	              <div id="tools">
-	                <div class='header'><span id='tools-toggle' class='button-span'>Tools</span></div>
-
-	                <div id='tools-links'>
-	                  <a href="javascript:tool.activate();">Standard</a><br />
-	                  <a href="javascript:hueChanger.activate();">Hued</a><br />
-	                  <a href="javascript:gradientTool.activate();">Gradient</a><br />
-	                  <a href="javascript:dottedLine.activate();">Dotted</a><br />
-	                  <a href="javascript:blackWhite.activate();">Clone</a><br />
-	                </div>
-	              </div>
-	              <div class="header">Collection
-	              <div id="new-canvas" class="header"><span class='button-span'>New Canvas</span></div>
-	              <div id="new-canvas-form">
-	                <input id="newCanvasForm" type='text' value="Add" onfocus="clearForm()" onblur="resetForm()" onsubmit="console.log('hello')" onkeypress="EnterKey(event)">
-	              </div>
-
-	         </div>
-	</nav>
-
-
 	  <canvas id="myCanvas"></canvas>
-    <div id="poster_shadow_1"></div>
-    <div id="poster_shadow_2"></div>
 	  <div id="connectCounter">Drawers: 1</div>
-	  <div id="temp-title">Untitled</div>
-
-	  <form id="picture-title">
-	      <input type="text" name="Title" value="Untitled" onblur='titleSubmit();'>
-	  </form>
+    <div id="theCollection">Collection</div>
 
 	  <button id='submit-picture' onclick="SVGemit()">Publish</button>
 
-	  <div class="temp">
-	</div>
+    <div class="temp"></div>
+    <div id="artworkImage"></div>
 
 </body>
 </html>

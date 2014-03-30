@@ -16,6 +16,10 @@ router.use(express.static(path.resolve(__dirname, 'client')));
 
 var picture = new Object();
 var connectCounter = 0;
+var imageURL = "http://cdn2.brooklynmuseum.org/images/opencollection/objects/size2/1994.156.1_bw.jpg";
+var title = "Pedestal";
+var artist = "Saarinen";
+var creationDate = "1956";
 
 drawing_room
   .on('connection', function(socket) {
@@ -23,6 +27,7 @@ drawing_room
   connectCounter++;
 
   drawing_room.sockets.emit('changeCount', connectCounter);
+  drawing_room.sockets.emit('artworkInfo', imageURL, title, artist, creationDate);
 
   //imports info for each show page
   socket.on('channel', function(data) {
